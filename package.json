@@ -1,0 +1,49 @@
+{
+  "name": "imicros-streams",
+  "version": "0.0.1",
+  "author": "Andreas Leinen <andreas.leinen@imicros.de> (www.imicros.de)",
+  "license": "MIT",
+  "description": "Moleculer service for Redis Streams",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --no-cache",
+    "test-streams": "jest test/streams.spec.js --coverage --no-cache --config=local.js",
+    "test-worker": "jest test/worker.mixin.spec.js --no-cache --config=local.js",
+    "test-local": "jest --coverage --no-cache --config=local.js"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "lib/*.js",
+      "lib/util/*.js",
+      "!lib/globals.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dev/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dev/"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/al66/imicros-streams.git"
+  },
+  "keywords": [
+    "imicros",
+    "moleculer",
+    "Redis Streams"
+  ],
+  "devDependencies": {
+    "coveralls": "^3.0.7",
+    "jest": "^24.9.0",
+    "moleculer": "^0.13.11",
+    "nats": "^1.3.2"
+  },
+  "dependencies": {
+    "ioredis": "^4.10.0",
+    "lodash": "^4.17.15",
+    "imicros-acl": "0.0.3"
+  }
+}
