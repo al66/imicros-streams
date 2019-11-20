@@ -11,20 +11,26 @@ Moleculer service for Redis Streams
 $ npm install imicros-streams --save
 ```
 ## Dependencies
-Required mixins (or a similar mixin with the same notation):
+Requires middleware AclMiddleware or similar (use of AclMixin):
 - [imicros-acl](https://github.com/al66/imicros-acl)
 
 # Usage
 ```js
 const { ServiceBroker } = require("moleculer");
-const { AclMixin } = require("imicros-acl");
 const { Streams } = require("imicros-streams");
 
 broker = new ServiceBroker({
     logger: console
 });
 broker.createService(Streams, Object.assign({ 
-    mixins: [AclMixin]
+    settings: { 
+        redis: {
+            port: process.env.REDIS_PORT || 6379,
+            host: process.env.REDIS_HOST || "127.0.0.1",
+            password: process.env.REDIS_AUTH || "",
+            db: process.env.REDIS_DB || 0,
+        }
+    }
 }));
 broker.start();
 ```
