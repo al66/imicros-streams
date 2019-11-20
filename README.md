@@ -36,6 +36,6 @@ broker.start();
 ```
 ## Actions
 - add { stream, message } => { id }  
-- read { group, count, [streams] } => { [{ id, message }] }  
+- read { group, count, stream } => { [{ stream, id, message }] }  
 - ack { group, [id] } => { count }
 - len { stream } => { count }
