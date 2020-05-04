@@ -45,6 +45,7 @@ describe("Test streams service", () => {
         beforeEach(() => {
             opts = { 
                 meta: { 
+                    ownerId: `owner1-${timestamp}`,
                     acl: {
                         accessToken: "this is the access token",
                         ownerId: `owner1-${timestamp}`,
@@ -52,8 +53,8 @@ describe("Test streams service", () => {
                     }, 
                     user: { 
                         id: `1-${timestamp}` , 
-                        email: `1-${timestamp}@host.com` }, 
-                    access: [`1-${timestamp}`, `2-${timestamp}`] 
+                        email: `1-${timestamp}@host.com` 
+                    }
                 } 
             };
         });
@@ -194,159 +195,7 @@ describe("Test streams service", () => {
             
         });
 
-       
-    /*
-        it("it should set 1. key 2. owner", () => {
-            opts.meta.acl.owner.id = `g2-${timestamp}`;
-            let key = `res1-${timestamp}`;
-            let params = {
-                key: key,
-                value: { 
-                    owner: 2,
-                    prop1: "Property 1",
-                    prop2: 2
-                }
-            };
-            return broker.call("store.set", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.key).toBeDefined();
-            });
-            
-        });
-        
-        it("it should set 2. key 1. owner", () => {
-            let key = `res2-${timestamp}`;
-            let params = {
-                key: key,
-                value: { 
-                    owner: 1,
-                    prop1: "Property 1",
-                    prop2: 3
-                }
-            };
-            return broker.call("store.set", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.key).toBeDefined();
-            });
-            
-        });
-        
-        it("it should get 1. key 1. owner", async () => {
-            let key = `res1-${timestamp}`;
-            let params = {
-                key: key
-            };
-            let value = { 
-                owner: 1,
-                prop1: "Property 1",
-                prop2: 2
-            };
-            await broker.call("store.get", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(expect.objectContaining(value));
-            });
-            
-        });
-        
-        it("it should get 1. key 2. owner", async () => {
-            opts.meta.acl.owner.id = `g2-${timestamp}`;
-            let key = `res1-${timestamp}`;
-            let params = {
-                key: key
-            };
-            let value = { 
-                owner: 2,
-                prop1: "Property 1",
-                prop2: 2
-            };
-            await broker.call("store.get", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(expect.objectContaining(value));
-            });
-            
-        });
-        
-        it("it should get 2. key 1. owner", async () => {
-            let key = `res2-${timestamp}`;
-            let params = {
-                key: key
-            };
-            let value = { 
-                owner: 1,
-                prop1: "Property 1",
-                prop2: 3
-            };
-            await broker.call("store.get", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(expect.objectContaining(value));
-            });
-            
-        });
-        */
     });
- 
-    /*
-    describe("Test inventory", () => {
-
-        let opts;
-        
-        beforeEach(() => {
-            opts = { 
-                meta: { 
-                    acl: {
-                        accessToken: "this is the access token",
-                        owner: {
-                            id: `g1-${timestamp}`
-                        }
-                    }, 
-                    user: { 
-                        id: `1-${timestamp}` , 
-                        email: `1-${timestamp}@host.com` }, 
-                    access: [`1-${timestamp}`, `2-${timestamp}`] 
-                } 
-            };
-        });
-        
-        it("it should return inventory", () => {
-            let params = {};
-            return broker.call("store.inventory", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toContain(`res1-${timestamp}`);
-            });
-            
-        });
-        
-    });
- 
-    describe("Test admin", () => {
-
-        let opts;
-        
-        beforeEach(() => {
-            opts = { 
-                meta: { 
-                    acl: {
-                        service: "admin"
-                    }, 
-                    user: { 
-                        id: `1-${timestamp}` , 
-                        email: `1-${timestamp}@host.com` }, 
-                    access: [`1-${timestamp}`, `2-${timestamp}`] 
-                } 
-            };
-        });
-        
-        it("it should return owner list", () => {
-            let params = {};
-            return broker.call("store.owners", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toContain(`g1-${timestamp}`);
-            });
-            
-        });
-        
-    });
-    */
  
     describe("Test stop broker", () => {
         it("should stop the broker", async () => {

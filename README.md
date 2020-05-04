@@ -10,11 +10,7 @@ Moleculer service for Redis Streams
 ```
 $ npm install imicros-streams --save
 ```
-## Dependencies
-Requires middleware AclMiddleware or similar (use of AclMixin):
-- [imicros-acl](https://github.com/al66/imicros-acl)
-
-# Usage
+# Usage Service
 ```js
 const { ServiceBroker } = require("moleculer");
 const { Streams } = require("imicros-streams");
@@ -23,6 +19,7 @@ broker = new ServiceBroker({
     logger: console
 });
 broker.createService(Streams, Object.assign({ 
+    name: "streams",
     settings: { 
         redis: {
             port: process.env.REDIS_PORT || 6379,
@@ -33,6 +30,32 @@ broker.createService(Streams, Object.assign({
     }
 }));
 broker.start();
+```
+# Usage Mixin
+```js
+const { StreamsWorker } = require("imicros-streams");
+
+const Worker = {
+    name: "myWorker",
+    mixins: [StreamsWorker],
+    dependencies: ["streams"],
+    settings: {
+        streams: {
+            stream: "my stream",
+            group: "first consumer group",
+            service: "streams"
+        }
+    },
+    methods: {
+        async handle({message,stream,id}) {
+            // do here your stuff
+            this.logger.debug("Method handle of Worker has been called", { message: message, stream: stream, id:id });
+            // return true to acknowledge, false to leave message open
+            return true;
+        }
+    }
+};
+
 ```
 ## Actions
 - add { stream, message } => { id }  

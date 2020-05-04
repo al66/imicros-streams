@@ -14,12 +14,11 @@ const Worker = {
     mixins: [StreamsWorker],
     dependencies: ["streams"],
     settings: {
-        actions: {
-            read: "streams.read",
-            ack: "streams.ack"
-        },
-        stream: stream,
-        group: `group-${timestamp}`
+        streams: {
+            stream: stream,
+            group: `group-${timestamp}`,
+            service: "streams"
+        }
     },
     methods: {
         async handle({message,stream,id}) {
@@ -32,27 +31,6 @@ const Worker = {
             return true;
         }
     }
-};
-
-const AclMock = {
-    localAction(next, action) {
-        return async function(ctx) {
-            ctx.meta = Object.assign(ctx.meta,{
-                acl: {
-                    accessToken: "this is the access token",
-                    ownerId: `owner-${timestamp}`,
-                    unrestricted: true
-                },
-                user: {
-                    idToken: "this is the id token",
-                    id: `1-${timestamp}` , 
-                    email: `1-${timestamp}@host.com` 
-                }
-            });
-            ctx.broker.logger.debug("ACL meta data has been set", { meta: ctx.meta, action: action });
-            return next(ctx);
-        };
-    }    
 };
 
 describe("Test worker mixin", () => {
@@ -68,7 +46,6 @@ describe("Test worker mixin", () => {
 
         it("it should start the broker", async () => {
             broker = new ServiceBroker({
-                middlewares:  [AclMock],
                 logger: console,
                 logLevel: "info" //"debug"
             });
@@ -96,7 +73,11 @@ describe("Test worker mixin", () => {
         let opts;
         
         beforeEach(() => {
-            opts = {};
+            opts = {
+                meta: {
+                    ownerId: `g-${timestamp}`
+                }
+            };
         });
         
         it("it should add and process a message", () => {
